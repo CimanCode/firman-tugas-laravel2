@@ -42,7 +42,7 @@ class postcontroller extends Controller
         $created = [
             'judul' => $rq->input('judul'),
             'artikel' => $rq->input('artikel'),
-            'gambar' => $rq->file('gambar')->store('image', 'public')
+            'gambar' => $rq->file('gambar')->store('img', 'public')
         ];
 
         post::query()->create($created);
@@ -65,7 +65,7 @@ class postcontroller extends Controller
         ];
 
         if($rq->hasFile('gambar')) {
-            $update['gambar'] = $rq->file('gambar')->store('image', 'public');
+            $update['gambar'] = $rq->file('gambar')->store('img', 'public');
         }
 
         post::query()->where('id', $id)->update($update);

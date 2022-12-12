@@ -53,7 +53,7 @@ class productcontroller extends Controller
             'harga_barang' => $rq->input('harga_barang'),
             'stok_barang' => $rq->input('stok_barang'),
             'deskripsi_barang' => $rq->input('deskripsi_barang'),
-            'gambar_barang' => $rq->file('gambar_barang')->store('image', 'public')
+            'gambar_barang' => $rq->file('gambar_barang')->store('imgs', 'public')
         ];
 
         product::query()->create($created);
@@ -68,8 +68,8 @@ class productcontroller extends Controller
             'deskripsi_barang' => $rq->input('deskripsi_barang')
         ];
 
-        if($rq->hasFile('gambar')) {
-            $products["gambar_barang"] = $rq->file('gambar')->store('image', 'public');
+        if($rq->hasFile('gambar_barang')) {
+            $products["gambar_barang"] = $rq->file('gambar_barang')->store('imgs', 'public');
         }
 
         product::query()->where("id",$id)->update($products);
