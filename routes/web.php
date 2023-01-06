@@ -34,7 +34,7 @@ Route::prefix('product')->group( function() {
 //     return view('home');
 // });
 
-Route::get('/', [postcontroller::class, 'blog'])->name('post.blog');
+Route::get('/blog', [postcontroller::class, 'blog'])->name('post.blog');
 
 Route::prefix('post')->group( function () {
     Route::get('/list', [postcontroller::class, 'index'])->name('post.list');
@@ -46,3 +46,6 @@ Route::prefix('post')->group( function () {
     Route::put('/update/{id}', [postcontroller::class, 'update'])->name('post.update');
     Route::get('/delete/{id}', [postcontroller::class, 'deleted'])->name('post.delete');
 });
+
+Route::get('/', [postcontroller::class, 'showSearch'])->name('showSearch');
+Route::get('/search', [postcontroller::class, 'search'])->name('post.search');

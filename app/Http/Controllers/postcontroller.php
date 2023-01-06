@@ -6,22 +6,39 @@ use App\Models\post;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Sastrawi\Stemmer\StemmerFactory;
 
 class postcontroller extends Controller
 {
 
     function index(){
+
         $post = post::query()->get();
         return view('post.list', [
             'post' => $post
         ]);
     }
 
+    function showSearch(){
+        return view('search');
+    }
+
+    function search(Request $request){
+        $stemerFactory = new \Sastrawi\Stemmer\StemmerFactory();
+        $stemer = $stemerFactory->createStemmer();
+        $quey = $request->input('search');
+        $post = post::where('judul', 'LIKE', '%' . $quey . '%')->orWhere('artikel', 'LIKE', '%' . $quey. '%')->get();
+        $stemer->stem($quey,$post);
+        similar_text($quey, $post, $percent);
+        echo($percent);
+        return view(('post.blog'), compact('post'));
+    }
+
     function blog(){
         $post = post::query()->get();
         return view('post.blog', [
             'post' => $post,
-            'product' => product::all()
+            'product' => product::latest()->get()
         ]);
     }
 
